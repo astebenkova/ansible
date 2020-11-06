@@ -1,3 +1,5 @@
 roles:
   - name: geerlingguy.docker
   - name: andrewrothstein.docker-compose
+collections:
+  - name: google.cloud
