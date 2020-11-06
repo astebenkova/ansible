@@ -9,6 +9,7 @@ verify_ssl = true
 ansible = "*"
 requests = "*"
 google-auth = "*"
+jq = "*"
 
 [requires]
 python_version = "3.6"
