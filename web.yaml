@@ -1,15 +1,18 @@
---- # Bootstrap Nginx
+---
+# Bootstrap Reverse proxy server
 - hosts: web
   become: yes
+  vars:
+    web_service: apache2
   tasks:
     - debug:
-        var: target_service
-    - name: Install Nginx
+        var: web_service
+    - name: Install WEB
       apt:
-        name: nginx
+        name: "{{ web_service }}"
         state: latest
       notify:
-        - Restart nginx
+        - Restart web
     - name: Create index.html
       file:
         name: /var/www/html/index.html
@@ -19,16 +22,16 @@
         line: "{{ ansible_hostname }}"
         path: /var/www/html/index.html
       notify:
-        - Restart nginx
+        - Restart web
       register: task_debug
     - debug:
         msg: "Output of linefile is: {{ task_debug }}"
 
   handlers:
-    - name: Start and enable Nginx
+    - name: Start and enable WEB
       service:
-        name: nginx
+        name: "{{ web_service }}"
         state: restarted
         enabled: yes
       listen:
-        "Restart nginx"
+        "Restart web"
