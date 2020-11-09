@@ -1,0 +1,25 @@
+---
+- hosts: localhost
+  tasks:
+    - name: Get files
+      get_url:
+        url: "http://{{item}}/index.php"
+        dest: "/tmp/{{item}}"
+      ignore_errors: yes
+      with_items:
+        - 192.168.169.100
+        - 192.168.169.101
+---
+- hosts: localhost
+  tasks:
+    - name: Get files
+      block:
+        - get_url:
+            url: "http://192.168.169.100"
+            dest: /tmp/index_file
+      rescue:
+        - debug:
+            msg: "The file doesn't exist -_-"
+      always:
+        - debug:
+            msg: "Play done!"
