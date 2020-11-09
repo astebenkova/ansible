@@ -1,0 +1,13 @@
+---
+- hosts: web
+  become: yes
+  tasks:
+    - name: Create users
+      user:
+        name: "{{item}}"
+        shell: /bin/bash
+        ssh_key_file: .ssh/id_rsa
+      with_items:
+        - sam
+        - john
+        - eva
