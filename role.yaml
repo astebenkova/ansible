@@ -1,0 +1,9 @@
+---
+- hosts: web
+  become: yes
+  vars:
+    - apache_listen_port: 8080
+  tasks:
+    - name: Install apache proxy server
+      include_role:
+        name: geerlingguy.apache
