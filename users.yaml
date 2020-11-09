@@ -1,6 +1,8 @@
 ---
 - hosts: web
   become: yes
+  vars:
+    userFile: /tmp/users.list
   tasks:
     - name: Create users
       user:
@@ -11,3 +13,15 @@
         - sam
         - john
         - eva
+    - name: Create a file
+      file:
+        path: "{{userFile}}"
+        state: touch
+    - name: List users
+      lineinfile:
+        path: "{{userFile}}"
+        line: "{{item}}"
+      with_items:
+        - "{{stuff}}"
+        - "{{faculty}}"
+        - "{{others}}"

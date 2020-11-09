@@ -1,0 +1,13 @@
+---
+- hosts: web
+  vars:
+    _inv_file: /tmp/inv.txt
+  tasks:
+    - name: Create a file
+      file:
+        path: "{{inv_file}}"
+        state: touch
+    - name: Generate inventory
+      lineinfile:
+        path: "{{inv_file}}"
+        line: "{{ groups['labservers']|join(' ') }}"
