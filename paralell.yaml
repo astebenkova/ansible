@@ -1,0 +1,13 @@
+---
+- hosts: labservers
+  become: yes
+  serial:
+    - 1
+    - 2
+    - 50%
+  imax_fail_percentage: 30
+  tasks:
+    - name: Check the presence of file
+      file:
+        name: /etc/hosts
+        state: file
