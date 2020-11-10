@@ -1,0 +1,8 @@
+---
+- hosts: localhost
+  # uses vault.txt password in the credentials/ dir
+  vars_files: secure_password
+  tasks:
+    - name: Show password
+      shell: echo {{ password }} > /tmp/vault.test
+      no_log: True
