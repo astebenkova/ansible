@@ -4,6 +4,15 @@
   vars:
     - apache_listen_port: 8080
   tasks:
+    - name: Open apache external port
+      ansible.posix.firewalld:
+        port: "{{apache_listen_port}}/tcp"
+        permanent: yes
+        state: enabled
+    - name: Restart firewalld
+      service:
+        name: firewalld
+        state: reloaded
     - name: Install apache proxy server
       include_role:
         name: geerlingguy.apache
