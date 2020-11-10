@@ -1,0 +1,22 @@
+---
+- hosts: web
+  become: yes
+  tasks:
+    - name: Install at
+      apt:
+        name: at
+        state: latest
+        update_cache: yes
+      when:
+        - ansible_facts['distribution'] == "Ubuntu"
+        - ansible_facts['distribution_major_version'] | int >= 16
+    - name: Enable and start at
+      service:
+        name: atd
+        enabled: yes
+        state: started
+    - name: Schedule a task with at
+      at:
+        command: df -h > /tmp/diskspace
+        count: 20
+        units: minutes
